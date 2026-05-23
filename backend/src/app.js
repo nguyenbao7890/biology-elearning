@@ -12,6 +12,7 @@ const parentRoutes = require("./routes/parent.routes");
 const adminRoutes = require("./routes/admin.routes");
 const uploadRoutes = require("./routes/upload.routes");
 const studentRoutes = require("./routes/student.routes");
+const chatbotRoutes = require("./routes/chatbot.routes");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.get("/", (req, res) => {
       uploads: "/api/uploads",
       staticUploads: "/uploads",
       student: "/api/student",
+      chatbot: "/api/chatbot",
     },
   });
 });
@@ -57,6 +59,7 @@ app.use("/api/marketplace", marketplaceRoutes);
 app.use("/api/parent", parentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/uploads", uploadRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

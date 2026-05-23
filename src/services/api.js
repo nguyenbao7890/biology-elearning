@@ -181,14 +181,7 @@ export const quizApi = {
 export const uploadApi = {
   image: (type, file) => {
     const formData = new FormData();
-    formData.append("file", file);
-
-    return uploadRequest(`/uploads/${type}`, formData);
-  },
-
-  file: (type, file) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    formData.append("image", file);
 
     return uploadRequest(`/uploads/${type}`, formData);
   },
@@ -290,4 +283,18 @@ export const studentApi = {
     }),
 
   continueLearning: () => apiRequest("/student/continue-learning"),
+};
+
+export const chatbotApi = {
+  sendMessage: (message) => {
+    const text =
+      typeof message === "string"
+        ? message
+        : message?.message || message?.text || message?.content || "";
+
+    return apiRequest("/chatbot/message", {
+      method: "POST",
+      body: JSON.stringify({ message: text }),
+    });
+  },
 };

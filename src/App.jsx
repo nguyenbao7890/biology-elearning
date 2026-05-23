@@ -3,6 +3,7 @@ import DashLayout from "./components/layout/DashLayout";
 import LandingPage from "./pages/public/LandingPage";
 import LoginPage from "./pages/public/LoginPage";
 import { PAGES_BY_ROLE } from "./routes/pageMap";
+import BiopetAIChat from "./components/chatbot/BiopetAIChat";
 import {
   authApi,
   clearAuthData,
@@ -61,16 +62,24 @@ export default function App() {
   };
 
   if (view === "landing") {
-    return <LandingPage onLogin={() => setView("login")} />;
+    return (
+      <>
+        <LandingPage onLogin={() => setView("login")} />
+        <BiopetAIChat />
+      </>
+    );
   }
 
   if (view === "login") {
     return (
-      <LoginPage
-        onLogin={handleLogin}
-        onBack={() => setView("landing")}
-        error={loginError}
-      />
+      <>
+        <LoginPage
+          onLogin={handleLogin}
+          onBack={() => setView("landing")}
+          error={loginError}
+        />
+        <BiopetAIChat />
+      </>
     );
   }
 
@@ -82,28 +91,31 @@ export default function App() {
   const PageComponent = pages?.[page];
 
   return (
-    <DashLayout
-      role={role}
-      page={page}
-      onNav={handleNav}
-      onLogout={handleLogout}
-      user={user}
-    >
-      {PageComponent ? (
-        <PageComponent
-          onNav={handleNav}
-          user={user}
-          pagePayload={pagePayload}
-          payload={pagePayload}
-          courseId={pagePayload.courseId}
-          lessonId={pagePayload.lessonId}
-          quizId={pagePayload.quizId}
-        />
-      ) : (
-        <div style={{ color: "#6b7280", padding: 40 }}>
-          Trang đang phát triển...
-        </div>
-      )}
-    </DashLayout>
+    <>
+      <DashLayout
+        role={role}
+        page={page}
+        onNav={handleNav}
+        onLogout={handleLogout}
+        user={user}
+      >
+        {PageComponent ? (
+          <PageComponent
+            onNav={handleNav}
+            user={user}
+            pagePayload={pagePayload}
+            payload={pagePayload}
+            courseId={pagePayload.courseId}
+            lessonId={pagePayload.lessonId}
+            quizId={pagePayload.quizId}
+          />
+        ) : (
+          <div style={{ color: "#6b7280", padding: 40 }}>
+            Trang đang phát triển...
+          </div>
+        )}
+      </DashLayout>
+      <BiopetAIChat />
+    </>
   );
 }
